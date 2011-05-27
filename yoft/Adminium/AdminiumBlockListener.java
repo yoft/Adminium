@@ -16,11 +16,11 @@ public class AdminiumBlockListener extends BlockListener {
 	
 	@Override
 	public void onBlockPlace(BlockPlaceEvent event) {
-		if (event.getBlock().getType() != Material.BEDROCK)
+		if (event.getBlockPlaced().getType() != Material.BEDROCK)
 			return;
 		
 		if (!plugin.hasPermission(event.getPlayer(), "adminium.place"))
-			event.setCancelled(true);
+			event.setBuild(false);
 		
 	}
 	
@@ -32,7 +32,7 @@ public class AdminiumBlockListener extends BlockListener {
 		if (!plugin.hasPermission(event.getPlayer(), "adminium.break"))
 			return;
 		
-		event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(Material.BEDROCK, 1));
 		event.getBlock().setType(Material.AIR);
+		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.BEDROCK, 1));
 	}
 }
